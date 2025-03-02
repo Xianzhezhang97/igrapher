@@ -36,26 +36,16 @@ function Welcome () {
       }, 500);
     }
   };
-  const sample = async () => {
-    const response = await login(
-      'neo4j+s',
-      'ea5a7bfb.databases.neo4j.io',
-      'neo4j',
-      '9bHKhl755RCYTv9fO5MobU8fOdcmci8brPJzFBbf6Jc'
-    );
-    if (response === 'OK') {
-      console.log('finish to get the whole graph');
-      localStorage.setItem('isLoggedIn', true);
-      navigate('/newgraph');
-    } else if (response === 'Wrong Password') {
-      setLoading(false);
+  const sample =  () => {
+  setLoading(true);
       setTimeout(() => {
-        alert('Authorization failed, Please check your input.');
-      }, 500);
-    }
+        navigate('/newgraph');
+        setLoading(false);
+      }, 700);
+
   };
   const Welcome = (
-    <div className="items-center flex justify-center ">
+    <div className="flex items-center justify-center ">
       <div className="h-[100vh] flex items-center ">
         {/* Home hello des */}
         <div className="visblecontainer">
@@ -158,7 +148,7 @@ function Welcome () {
                 </motion.div>
               </div>
             )}
-            <motion.div className="flex justify-center items-center ">
+            <motion.div className="flex items-center justify-center ">
               <motion.div
                 layout
                 className="w-[500px] flex justify-center items-center place-items-center text-center gap-x-24 pt-[50px]"

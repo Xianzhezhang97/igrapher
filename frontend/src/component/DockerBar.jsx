@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../help/ContextManager';
@@ -14,7 +16,7 @@ const Distance = (currentIndex, index) => {
   return Math.abs(currentIndex - index);
 };
 
-function DockerBar () {
+function DockerBar() {
   const {
     queryData,
     setQueryData,
@@ -25,7 +27,7 @@ function DockerBar () {
     wholeLinkColorMapping,
     setSelectedLink,
     graphData,
-    dataLoaded
+    dataLoaded,
   } = useAppContext();
   const [labels, setlabels] = useState([]);
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
@@ -41,7 +43,7 @@ function DockerBar () {
       ViewSetting: false,
       HistoryQuerySetting: false,
       DockerBarPosition: 'hide',
-      NavBar: 'hide'
+      NavBar: 'hide',
     }));
   };
 
@@ -53,7 +55,7 @@ function DockerBar () {
       ViewSetting: false,
       HistoryQuerySetting: false,
       DockerBarPosition: 'center',
-      NavBar: 'visible'
+      NavBar: 'visible',
     }));
   };
 
@@ -68,11 +70,11 @@ function DockerBar () {
           NavBar: 'hide',
           ViewSetting: false,
           HistoryQuerySetting: false,
-          DockerBarPosition: 'right'
+          DockerBarPosition: 'right',
         }));
         setCurrentIndex(-99);
         setHasEntered(false);
-      }
+      },
     },
     {
       name: 'Select',
@@ -80,7 +82,7 @@ function DockerBar () {
       onClick: () => {
         // Add the desired functionality for Select tool
         console.log('Select tool clicked');
-      }
+      },
     },
     {
       name: 'Scroll',
@@ -88,24 +90,24 @@ function DockerBar () {
       onClick: () => {
         // Add the desired functionality for Scroll tool
         console.log('Scroll tool clicked');
-      }
+      },
     },
     {
       name: 'Back',
       icon: 'fi fi-br-angle-left pt-[5px]',
-      onClick: () => goBack()
+      onClick: () => goBack(),
     },
     {
       name: 'Forward',
       icon: 'fi fi-br-angle-right pt-[5px]',
-      onClick: () => goForward()
+      onClick: () => goForward(),
     },
     {
       name: 'Delete',
       icon: 'fi fi-sr-trash pt-[5px]',
       onClick: () => {
         clearGraph();
-      }
+      },
     },
     {
       name: 'Save',
@@ -113,7 +115,7 @@ function DockerBar () {
       onClick: () => {
         // Add the desired functionality for Save tool
         console.log('Save tool clicked');
-      }
+      },
     },
     {
       name: 'Export',
@@ -121,8 +123,8 @@ function DockerBar () {
       onClick: () => {
         // Add the desired functionality for Export tool
         console.log('Export tool clicked');
-      }
-    }
+      },
+    },
   ];
   const addNewNode = (node) => {
     const { nodes, links } = queryData;
@@ -135,7 +137,7 @@ function DockerBar () {
         ...node,
         fx: 0,
         fy: 0,
-        fz: 0
+        fz: 0,
       };
     } else {
       // Calculate the average position of existing nodes
@@ -149,7 +151,7 @@ function DockerBar () {
         ...node,
         fx: avgX + Math.cos(angle) * distance,
         fy: avgY + Math.sin(angle) * distance,
-        fz: avgZ + Math.random() * distance - distance / 2 // Add a random offset to z
+        fz: avgZ + Math.random() * distance - distance / 2, // Add a random offset to z
       };
     }
     const newNodes = [...nodes, newNode];
@@ -199,7 +201,7 @@ function DockerBar () {
 
   // update the nodeLabels
   useEffect(() => {
-    console.log('graph data', graphData);
+    // console.log('graph data', graphData);
     // const properties =
     //   graphData.newNodes && graphData.newNodes[0].properties
     //     ? Object.keys(graphData.newNodes[0].properties)
@@ -209,10 +211,12 @@ function DockerBar () {
       const mappedlabels = Object.entries(wholeLabelColorMapping).map(
         ([name, color]) => ({
           name,
-          color
-        })
+          color,
+        }),
       );
+      // setTimeout(() => {
       setlabels(mappedlabels);
+      // }, 500);
     };
     fetchlabels();
   }, [wholeLabelColorMapping]);
@@ -228,10 +232,10 @@ function DockerBar () {
         attribute: Object.entries(node.properties).reduce(
           (acc, [key, { value, condition }]) => ({
             ...acc,
-            [key]: `${condition} ${value}`
+            [key]: `${condition} ${value}`,
           }),
-          {}
-        )
+          {},
+        ),
       };
 
       if (nodeIndex < queryData.nodes.length - 1) {
@@ -241,7 +245,7 @@ function DockerBar () {
             (link.source.id === node.id &&
               link.target.id === queryData.nodes[nodeIndex + 1].id) ||
             (link.target.id === node.id &&
-              link.source.id === queryData.nodes[nodeIndex + 1].id)
+              link.source.id === queryData.nodes[nodeIndex + 1].id),
         );
 
         console.log('Link connected to source node', link);
@@ -252,10 +256,10 @@ function DockerBar () {
             attribute: Object.entries(link.properties || {}).reduce(
               (acc, [key, { value, condition }]) => ({
                 ...acc,
-                [key]: `${condition} ${value}`
+                [key]: `${condition} ${value}`,
               }),
-              {}
-            )
+              {},
+            ),
           };
         }
       }
@@ -272,16 +276,16 @@ function DockerBar () {
 
     const linksResponse = Object.keys(response.relationships || {}).length
       ? processRelationships(
-        Object.entries(response.relationships),
-        wholeLinkColorMapping
-      )
+          Object.entries(response.relationships),
+          wholeLinkColorMapping,
+        )
       : [];
 
     console.log('link response', linksResponse);
     setQueryData({ nodes: nodesResponse, links: linksResponse });
     setQueryHistory((prevHistory) => [
       ...prevHistory,
-      { nodes: nodesResponse, links: linksResponse }
+      { nodes: nodesResponse, links: linksResponse },
     ]);
     setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
   };
@@ -292,73 +296,73 @@ function DockerBar () {
       Icon: 'fi fi-sr-picture',
       svg: (
         <svg
-          className="flex-shrink-0 w-10 h-10 text-gray-500  transition duration-50   text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 24 24"
+          className='flex-shrink-0 w-10 h-10 text-gray-500 transition duration-50 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='currentColor'
+          viewBox='0 0 24 24'
         >
-          <path d="M8 3a3 3 0 0 0-1 5.8v6.4a3 3 0 1 0 2 0V15c0-1.1.9-2 2-2h1a5 5 0 0 0 5-4.1 3 3 0 1 0-2.1-.1A3 3 0 0 1 12 11h-1a4 4 0 0 0-2 .5V8.8A3 3 0 0 0 8 3Z" />
+          <path d='M8 3a3 3 0 0 0-1 5.8v6.4a3 3 0 1 0 2 0V15c0-1.1.9-2 2-2h1a5 5 0 0 0 5-4.1 3 3 0 1 0-2.1-.1A3 3 0 0 1 12 11h-1a4 4 0 0 0-2 .5V8.8A3 3 0 0 0 8 3Z' />
         </svg>
       ),
       onClick: () => {
         submitQuery();
-      }
+      },
     },
     {
       name: 'Whole Graph',
       Icon: 'fi fi-sr-picture',
       svg: (
         <svg
-          className="flex-shrink-0 w-10 h-10 text-gray-500  transition duration-50   dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+          className='flex-shrink-0 w-10 h-10 text-gray-500 transition duration-50 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
         >
           <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeWidth="2"
-            d="M8.7 8.7c1.1-1 2.2-2 3.3-2.7m0 0c3.1-2 6-2.6 7.4-1.3 1.8 1.8 0 6.6-4 10.7-4.1 4-8.9 5.8-10.7 4C3.4 18 4 15.2 6 12m6-6C9 4 6 3.3 4.7 4.6c-1.8 1.8 0 6.6 4 10.7M12 6c1.2.7 2.3 1.7 3.4 2.7m2.7 3.4c2 3 2.6 6 1.3 7.3C18 20.7 15 20 12 18m2-6a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeWidth='2'
+            d='M8.7 8.7c1.1-1 2.2-2 3.3-2.7m0 0c3.1-2 6-2.6 7.4-1.3 1.8 1.8 0 6.6-4 10.7-4.1 4-8.9 5.8-10.7 4C3.4 18 4 15.2 6 12m6-6C9 4 6 3.3 4.7 4.6c-1.8 1.8 0 6.6 4 10.7M12 6c1.2.7 2.3 1.7 3.4 2.7m2.7 3.4c2 3 2.6 6 1.3 7.3C18 20.7 15 20 12 18m2-6a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z'
           />
         </svg>
-      )
+      ),
     },
     {
       name: 'New Graph',
       Icon: 'fi fi-sr-picture',
       svg: (
         <svg
-          className="flex-shrink-0 w-10 h-10 text-gray-500 dark:text-white transition duration-50  group-hover:text-gray-900 dark:group-hover:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+          className='flex-shrink-0 w-10 h-10 text-gray-500 transition dark:text-white duration-50 group-hover:text-gray-900 dark:group-hover:text-white'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
         >
           <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 7.8v8.4M7.8 12h8.4m4.8 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
+            d='M12 7.8v8.4M7.8 12h8.4m4.8 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
           />
         </svg>
-      )
+      ),
     },
     {
       name: 'History',
       svg: (
         <motion.svg
-          className="w-10 h-10 text-gray-500 dark:text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
+          className='w-10 h-10 text-gray-500 dark:text-white'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
         >
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
+          <circle cx='12' cy='12' r='10' />
+          <polyline points='12 6 12 12 16 14' />
         </motion.svg>
       ),
       onClick: () => {
@@ -367,28 +371,28 @@ function DockerBar () {
           HistoryQuerySetting: true,
           ViewSetting: false,
           QuerySideBar: false,
-          DockerBarPosition: 'left'
+          DockerBarPosition: 'left',
         }));
-      }
+      },
     },
     {
       name: 'Setting',
       Icon: 'fi fi-sr-picture',
       svg: (
-        <motion.div layout layoutId="SettingComponentCaptureAnimation">
+        <motion.div layout layoutId='SettingComponentCaptureAnimation'>
           <svg
-            className="flex w-10 h-10 text-gray-500 dark:text-white transition duration-50  group-hover:text-gray-900 dark:group-hover:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+            className='flex w-10 h-10 text-gray-500 transition dark:text-white duration-50 group-hover:text-gray-900 dark:group-hover:text-white'
+            aria-hidden='true'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
           >
             <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 7h14M5 12h14M5 17h14"
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M5 7h14M5 12h14M5 17h14'
             />
           </svg>
         </motion.div>
@@ -400,10 +404,10 @@ function DockerBar () {
           HistoryQuerySetting: false,
           QuerySideBar: false,
           NavBar: 'hide',
-          DockerBarPosition: 'left'
+          DockerBarPosition: 'left',
         }));
-      }
-    }
+      },
+    },
   ];
   const generateUniqueId = () =>
     `Node-${new Date().getTime()}-${Math.random().toString(36).slice(2, 11)}`;
@@ -420,7 +424,7 @@ function DockerBar () {
     setQueryData(newGraphData);
     setQueryHistory((prevHistory) => [
       ...prevHistory.slice(0, currentHistoryIndex + 1),
-      newGraphData
+      newGraphData,
     ]);
     setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
   };
@@ -453,7 +457,7 @@ function DockerBar () {
     setQueryData({ nodes: [], links: [] });
     setQueryHistory((prevHistory) => [
       ...prevHistory.slice(0, currentHistoryIndex + 1),
-      { nodes: [], links: [] }
+      { nodes: [], links: [] },
     ]);
     setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
   };
@@ -498,18 +502,36 @@ function DockerBar () {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1.2 } }}
           exit={{ y: 30, opacity: 0, transition: { duration: 0.3 } }}
-          className={`flex  justify-center items-center fixed z-50  
-        ${isComponentOpen.DockerBarPosition === 'left' && ' left-[50px] right-[400px]  bottom-[45px] '}
-        ${isComponentOpen.DockerBarPosition === 'center' && ' left-0 right-0  bottom-[45px] '}
-        ${isComponentOpen.DockerBarPosition === 'right' && ' left-[400px] right-[50px]  bottom-[45px] '}
-        ${isComponentOpen.DockerBarPosition === 'hide' && 'scale-0 left-0 right-0 -bottom-[70px]'}
+          className={`flex  justify-center items-center fixed z-40  
+        ${
+          isComponentOpen.DockerBarPosition === 'left' &&
+          ' left-[50px] right-[400px]  bottom-[45px] '
+        }
+        ${
+          isComponentOpen.DockerBarPosition === 'center' &&
+          ' left-0 right-0  bottom-[45px] '
+        }
+        ${
+          isComponentOpen.DockerBarPosition === 'right' &&
+          ' left-[400px] right-[50px]  bottom-[45px] '
+        }
+        ${
+          isComponentOpen.DockerBarPosition === 'hide' &&
+          'scale-0 left-0 right-0 -bottom-[70px]'
+        }
         }   `}
         >
           {/* {console.log('rendered')} */}
           <motion.div
             layout
             transition={{ duration: 0.7 }}
-            className={`${dataLoaded === true ? 'inline-flex' : 'flex w-[50%]'}  justify-center items-center ${hasEntered ? 'bg-white/95 dark:bg-gray-600/80' : 'bg-gray-50/70 dark:bg-gray-300/20 backdrop-blur-[5px]'}  
+            className={`${
+              dataLoaded === true ? 'inline-flex' : 'flex w-[50%]'
+            }  justify-center items-center ${
+              hasEntered
+                ? 'bg-white/95 dark:bg-gray-600/80'
+                : 'bg-gray-50/70 dark:bg-gray-300/20 backdrop-blur-[5px]'
+            }  
           border border-gray-100 dark:border-gray-700/10 rounded-[20px]  dark:border-gray-600 ${
             currentIndex === -99
               ? 'px-[7.5px] h-[70px] '
@@ -517,7 +539,7 @@ function DockerBar () {
           }`}
           >
             {dataLoaded === true && (
-              <motion.div className="inline-flex  justify-center items-center">
+              <motion.div className='inline-flex items-center justify-center'>
                 {/* Tools */}
                 <AnimatePresence>
                   {Tools.map((tool, index) => {
@@ -527,18 +549,18 @@ function DockerBar () {
                         tool.name !== 'Query') && (
                         <motion.div
                           key={tool.name}
-                          className="flex  flex-col justify-center items-center transition-all duration-50"
+                          className='flex flex-col items-center justify-center transition-all duration-50'
                         >
                           <div
                             onMouseEnter={() => setCurrentIndex(index)}
-                            className="p-[7.5px]"
+                            className='p-[7.5px]'
                           >
                             <motion.div
                               onClick={tool.onClick}
                               whileTap={{
                                 backgroundColor: 'rgba(100, 100, 100, 0.4)',
                                 backdropFilter: 'blur(5px)',
-                                transition: { duration: 0.3 }
+                                transition: { duration: 0.3 },
                               }}
                               style={{
                                 zIndex: currentIndex === index ? 50 : 10,
@@ -546,7 +568,7 @@ function DockerBar () {
                                   InitialScale -
                                     Distance(currentIndex, index) *
                                       ScaleFadeFeature,
-                                  BaseScale
+                                  BaseScale,
                                 ),
                                 boxShadow:
                                   currentIndex === index
@@ -556,25 +578,25 @@ function DockerBar () {
                                   InitialY -
                                     Distance(currentIndex, index) *
                                       YFadeFeature,
-                                  baseY
+                                  baseY,
                                 ),
                                 margin: Math.max(
                                   InitialMargin -
                                     Distance(currentIndex, index) *
                                       MarginFadeFeature,
-                                  baseMargin
+                                  baseMargin,
                                 ),
                                 opacity: Math.max(
                                   InitialOpacity -
                                     Distance(currentIndex, index) *
                                       OpacityFadeFeature,
-                                  baseOpacity
+                                  baseOpacity,
                                 ),
                                 animationDelay: ` ${
                                   hasEntered === 0
                                     ? `${index * AnimationDelay}s`
                                     : undefined
-                                }`
+                                }`,
                               }}
                               className={`cursor-pointer ${
                                 hasEntered === 0
@@ -583,7 +605,11 @@ function DockerBar () {
                               } flex transition-all duration-50 justify-center items-center ${DockerButtonSize} ${
                                 tool.name === 'Query'
                                   ? 'rounded-[10px] backdrop-blur-[5px]'
-                                  : ` ${hasEntered ? 'bg-gray-900/10  dark:bg-gray-100/50' : 'bg-gray-900/10  dark:bg-gray-100/5'}  backdrop-blur-[5px] rounded-[10px] `
+                                  : ` ${
+                                      hasEntered
+                                        ? 'bg-gray-900/10  dark:bg-gray-100/50'
+                                        : 'bg-gray-900/10  dark:bg-gray-100/5'
+                                    }  backdrop-blur-[5px] rounded-[10px] `
                               } `}
                             >
                               {tool.icon && (
@@ -593,14 +619,18 @@ function DockerBar () {
                               )}
                               {tool.img && (
                                 <motion.div
-                                  layoutId="Query"
-                                  layout="position"
-                                  className={`p-[7px] ${hasEntered ? 'bg-gray-900/10  dark:bg-gray-100/50' : 'bg-gray-900/10  dark:bg-gray-100/5'}  backdrop-blur-[5px]   w-full h-full  flex justify-center items-center rounded-[10px]`}
+                                  layoutId='Query'
+                                  layout='position'
+                                  className={`p-[7px] ${
+                                    hasEntered
+                                      ? 'bg-gray-900/10  dark:bg-gray-100/50'
+                                      : 'bg-gray-900/10  dark:bg-gray-100/5'
+                                  }  backdrop-blur-[5px]   w-full h-full  flex justify-center items-center rounded-[10px]`}
                                 >
                                   <motion.img
-                                    layoutId="QueryComponentCaptureAnimation"
+                                    layoutId='QueryComponentCaptureAnimation'
                                     layout
-                                    className="dark:invert"
+                                    className='dark:invert'
                                     src={tool.img}
                                   ></motion.img>
                                 </motion.div>
@@ -618,16 +648,16 @@ function DockerBar () {
                                   opacity: 1,
                                   y: 0,
                                   scale: 1,
-                                  transition: { duration: 0.31 }
+                                  transition: { duration: 0.31 },
                                 }}
                                 exit={{
                                   opacity: 0,
                                   y: -15,
                                   scale: 0,
-                                  transition: { duration: 0.3 }
+                                  transition: { duration: 0.3 },
                                 }}
                                 id={tool.name}
-                                className="flex z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white bg-gray-900/60 rounded-full shadow-lg dark:bg-gray-700"
+                                className='flex z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white bg-gray-900/60 rounded-full shadow-lg dark:bg-gray-700'
                               >
                                 {tool.name}
                               </motion.div>
@@ -647,13 +677,13 @@ function DockerBar () {
                     scaleY: Math.max(
                       InitialScale -
                         Distance(currentIndex, Tools.length + 1) * InitialScale,
-                      BaseScale
+                      BaseScale,
                     ),
                     animationDelay: ` ${
                       hasEntered === 0
                         ? `${(Tools.length + 1) * AnimationDelay}s`
                         : undefined
-                    }`
+                    }`,
                   }}
                   className={`${
                     hasEntered === 0
@@ -670,14 +700,14 @@ function DockerBar () {
                       openQueryPanel({
                         id: generateUniqueId(),
                         group: label.name,
-                        color: label.color
+                        color: label.color,
                       })
                     }
-                    className="flex flex-col justify-center items-center transition-all duration-50"
+                    className='flex flex-col items-center justify-center transition-all duration-50'
                   >
                     <div
                       onMouseEnter={() => setCurrentIndex(index + Tools.length)}
-                      className="p-[7.5px]"
+                      className='p-[7.5px]'
                     >
                       <motion.div
                         draggable={false}
@@ -696,7 +726,7 @@ function DockerBar () {
                             InitialScale -
                               Distance(currentIndex, index + Tools.length) *
                                 ScaleFadeFeature,
-                            BaseScale
+                            BaseScale,
                           ),
                           boxShadow:
                             currentIndex === index + Tools.length
@@ -709,33 +739,39 @@ function DockerBar () {
                             InitialY -
                               Distance(currentIndex, index + Tools.length) *
                                 YFadeFeature,
-                            baseY
+                            baseY,
                           ),
                           margin: Math.max(
                             InitialMargin -
                               Distance(currentIndex, index + Tools.length) *
                                 MarginFadeFeature,
-                            baseMargin
+                            baseMargin,
                           ),
                           opacity: Math.max(
                             InitialOpacity -
                               Distance(currentIndex, index + Tools.length) *
                                 OpacityFadeFeature,
-                            baseOpacity
+                            baseOpacity,
                           ),
                           animationDelay: ` ${
                             hasEntered === 0
                               ? `${(index + Tools.length) * AnimationDelay}s`
                               : undefined
-                          }`
+                          }`,
                         }}
                         className={`${
                           hasEntered === 0
                             ? 'animate__animated animate__fadeInUp'
                             : ''
                         } 
-                  ${hasEntered ? 'rounded-full' : ''} bg-gray-900/10  dark:bg-gray-100/5 backdrop-blur-[5px] 
-                   ${currentIndex === index + Tools.length ? `${label.color}/10   ` : 'bg-gray-900/10  dark:bg-gray-100/5 backdrop-blur-[5px]'}   
+                  ${
+                    hasEntered ? 'rounded-full' : ''
+                  } bg-gray-900/10  dark:bg-gray-100/5 backdrop-blur-[5px] 
+                   ${
+                     currentIndex === index + Tools.length
+                       ? `${label.color}/10   `
+                       : 'bg-gray-900/10  dark:bg-gray-100/5 backdrop-blur-[5px]'
+                   }   
                   flex transition-all duration-50 justify-center items-center ${DockerButtonSize}                  
                       backdrop-blur-lg rounded-[10px]`}
                       >
@@ -744,23 +780,23 @@ function DockerBar () {
                           dragTransition={{
                             min: 0,
                             max: 500,
-                            bounceDamping: 12
+                            bounceDamping: 12,
                           }}
                           onDragStart={(e) => {
                             // Set the drag data with a type and the item's identifier.
                             const dragData = {
                               name: label.name,
                               color: label.color,
-                              id: generateUniqueId()
+                              id: generateUniqueId(),
                             };
                             e.dataTransfer.setData(
                               'application/json',
-                              JSON.stringify(dragData)
+                              JSON.stringify(dragData),
                             );
                             e.dataTransfer.effectAllowed = 'move';
                             setCurrentlyDragging({
                               nodeName: label.name,
-                              nodeColor: label.color
+                              nodeColor: label.color,
                             });
                             setCursorEvent('cursor-grabbing');
                           }}
@@ -773,7 +809,14 @@ function DockerBar () {
                           }}
                           whileDrag={{ scale: 1.2, cursor: 'grabbing' }}
                           style={{ backgroundColor: label.color }}
-                          className={` ${currentIndex === index + Tools.length ? (currentlyDragging && currentlyDragging.nodeName === label.name ? 'rounded-full  blur-[5px] w-[20px] h-[20px] ' : 'w-[30px] h-[30px]') : 'w-[20px] h-[20px]  '} cursor-grab rounded-full text-gray-500 dark:text-white duration-300 transition-all `}
+                          className={` ${
+                            currentIndex === index + Tools.length
+                              ? currentlyDragging &&
+                                currentlyDragging.nodeName === label.name
+                                ? 'rounded-full  blur-[5px] w-[20px] h-[20px] '
+                                : 'w-[30px] h-[30px]'
+                              : 'w-[20px] h-[20px]  '
+                          } cursor-grab rounded-full text-gray-500 dark:text-white duration-300 transition-all `}
                         >
                           <motion.img
                             className={` rounded-full ${label.color}`}
@@ -791,16 +834,16 @@ function DockerBar () {
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            transition: { duration: 0.31 }
+                            transition: { duration: 0.31 },
                           }}
                           exit={{
                             opacity: 0,
                             y: -15,
                             scale: 0,
-                            transition: { duration: 0.3 }
+                            transition: { duration: 0.3 },
                           }}
                           id={label.name}
-                          className="  z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white  bg-gray-900/60 rounded-full shadow-sm   dark:bg-gray-700"
+                          className='  z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white  bg-gray-900/60 rounded-full shadow-sm   dark:bg-gray-700'
                         >
                           {label.name}
                         </motion.div>
@@ -823,16 +866,18 @@ function DockerBar () {
                       InitialScale -
                         Distance(
                           currentIndex,
-                          Tools.length + labels.length + 1
+                          Tools.length + labels.length + 1,
                         ) *
                           InitialScale,
-                      BaseScale
+                      BaseScale,
                     ),
                     animationDelay: ` ${
                       hasEntered === 0
-                        ? `${(Tools.length + labels.length + 1) * AnimationDelay}s`
+                        ? `${
+                            (Tools.length + labels.length + 1) * AnimationDelay
+                          }s`
                         : undefined
-                    }`
+                    }`,
                   }}
                   className={`${
                     hasEntered === 0
@@ -853,22 +898,22 @@ function DockerBar () {
                           CurrentTool.name !== 'History')) && (
                         <motion.div
                           key={CurrentTool.name}
-                          className="flex  flex-col justify-center items-center transition-all duration-50"
+                          className='flex flex-col items-center justify-center transition-all duration-50'
                         >
                           <div
                             onMouseEnter={() =>
                               setCurrentIndex(
-                                Tools.length + labels.length + index
+                                Tools.length + labels.length + index,
                               )
                             }
-                            className="p-[7.5px]"
+                            className='p-[7.5px]'
                           >
                             <motion.div
                               onClick={CurrentTool.onClick}
                               whileTap={{
                                 backgroundColor: 'rgba(100, 100, 100, 0.4)',
                                 backdropFilter: 'blur(5px)',
-                                transition: { duration: 0.3 }
+                                transition: { duration: 0.3 },
                               }}
                               style={{
                                 zIndex:
@@ -880,10 +925,10 @@ function DockerBar () {
                                   InitialScale -
                                     Distance(
                                       currentIndex,
-                                      Tools.length + labels.length + index
+                                      Tools.length + labels.length + index,
                                     ) *
                                       ScaleFadeFeature,
-                                  BaseScale
+                                  BaseScale,
                                 ),
                                 boxShadow:
                                   currentIndex ===
@@ -894,41 +939,48 @@ function DockerBar () {
                                   InitialY -
                                     Distance(
                                       currentIndex,
-                                      Tools.length + labels.length + index
+                                      Tools.length + labels.length + index,
                                     ) *
                                       YFadeFeature,
-                                  baseY
+                                  baseY,
                                 ),
                                 margin: Math.max(
                                   InitialMargin -
                                     Distance(
                                       currentIndex,
-                                      Tools.length + labels.length + index
+                                      Tools.length + labels.length + index,
                                     ) *
                                       MarginFadeFeature,
-                                  baseMargin
+                                  baseMargin,
                                 ),
                                 opacity: Math.max(
                                   InitialOpacity -
                                     Distance(
                                       currentIndex,
-                                      Tools.length + labels.length + index
+                                      Tools.length + labels.length + index,
                                     ) *
                                       OpacityFadeFeature,
-                                  baseOpacity
+                                  baseOpacity,
                                 ),
                                 animationDelay: ` ${
                                   hasEntered === 0
-                                    ? `${(Tools.length + labels.length + index) * AnimationDelay}s`
+                                    ? `${
+                                        (Tools.length + labels.length + index) *
+                                        AnimationDelay
+                                      }s`
                                     : undefined
-                                }`
+                                }`,
                               }}
                               className={`cursor-pointer ${
                                 hasEntered === 0
                                   ? 'animate__animated animate__fadeInUp'
                                   : ''
                               } flex transition-all duration-50 justify-center items-center ${DockerButtonSize} 
-                      ${hasEntered ? 'bg-gray-900/10  dark:bg-gray-100/50' : 'bg-gray-900/10  dark:bg-gray-100/5'}  backdrop-blur-[5px] rounded-[10px]`}
+                      ${
+                        hasEntered
+                          ? 'bg-gray-900/10  dark:bg-gray-100/50'
+                          : 'bg-gray-900/10  dark:bg-gray-100/5'
+                      }  backdrop-blur-[5px] rounded-[10px]`}
                             >
                               <motion.div
                                 // layout={
@@ -940,8 +992,8 @@ function DockerBar () {
                                   CurrentTool.name === 'Setting'
                                     ? 'Setting'
                                     : CurrentTool.name === 'History'
-                                      ? 'History'
-                                      : undefined
+                                    ? 'History'
+                                    : undefined
                                 }
                               >
                                 {CurrentTool.svg}
@@ -960,16 +1012,16 @@ function DockerBar () {
                                   opacity: 1,
                                   y: 0,
                                   scale: 1,
-                                  transition: { duration: 0.31 }
+                                  transition: { duration: 0.31 },
                                 }}
                                 exit={{
                                   opacity: 0,
                                   y: -15,
                                   scale: 0,
-                                  transition: { duration: 0.3 }
+                                  transition: { duration: 0.3 },
                                 }}
                                 id={CurrentTool.name}
-                                className="flex z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white bg-gray-900/60 rounded-full shadow-lg dark:bg-gray-700"
+                                className='flex z-10 -mt-[53px] flex px-[7px] py-[2px] text-[12px] font-medium text-white bg-gray-900/60 rounded-full shadow-lg dark:bg-gray-700'
                               >
                                 {CurrentTool.name}
                               </motion.div>
@@ -983,7 +1035,7 @@ function DockerBar () {
               </motion.div>
             )}
             {dataLoaded === false && (
-              <motion.div className="flex-col w-full justify-center items-center fixed bottom-6 px-[15px]">
+              <motion.div className='flex-col w-full justify-center items-center fixed bottom-6 px-[15px]'>
                 <ProgressBar />
               </motion.div>
             )}
@@ -994,7 +1046,7 @@ function DockerBar () {
   );
 
   return (
-    <div className="">
+    <div className=''>
       {DockerBar}
       {isQueryPanelOpen && (
         <NodeQueryPanel
