@@ -16,20 +16,39 @@ const NodeQueryPanel = () => {
         onClick={() => setOpen(false)}
         className='fixed top-0 left-0 right-0 bottom-0 transform z-40 flex justify-center items-center transition-all backdrop-blur-[10px]'
       >
-        <div className='w-[600px] animate__animated overflow-hidden animate__fadeInUp max-h-[80%] rounded-[28px] bg-gray-300/50 dark:bg-gray-600/50  px-[40px] py-[50px] transition-all'>
+        <div className='w-[600px] animate__animated overflow-hidden animate__fadeInUp max-h-[80%] rounded-[28px] bg-gray-300/50 dark:bg-gray-700/70  px-[40px] py-[50px] transition-all'>
           <h1 className='mb-[30px] text-[35px]  text-center font-medium font-center text-gray-900 dark:text-white animate__animated animate__zoomIn transition-all'>
-            Notify
+            Notification
           </h1>
           <p className='text-white my-[15px] text-[17px] animate__animated animate__fadeInUp'>
-            Welcome to visit this App, this is a demo, some feature is not
-            available due to I don't have a server, full code file is under the
-            boxframe.
+            Welcome to this app! I am{' '}
+            <a
+              target='_blank'
+              rel='noopener noreferrer'
+              className='mx-1 hover:mx-2 transition-all underline hover:capitalize hover:font-[600] duration-500 ease-in-out'
+              href='https://xianzhe.site/'
+            >
+              Scott Cheung
+            </a>
+            . This is a demo version, and some features are unavailable because
+            there is no server. The full source code line is below. You can
+            explore
+            <a
+              target='_blank'
+              rel='noopener noreferrer'
+              className='mx-1 hover:mx-2 transition-all underline hover:capitalize hover:font-[600] duration-500 ease-in-out'
+              href='https://xianzhe.site/project'
+            >
+              more projects
+            </a>
           </p>
           <p className='text-white my-[15px] text-[17px] animate__animated animate__fadeInUp'>
-            In this project, I responsible for UI/UX and animation design and
-            development, and some part of backend development data processsing
-            and API development.
+            In this project, I was 100% responsible for UI/UX design,
+            animations, component development for frontend development.
+            Additionally, I worked on backend data processing and API
+            development.
           </p>
+
           <div className='flex items-center justify-center mt-10 place-items-center gap-x-24'>
             <a
               href='https://github.com/Xianzhezhang97/igrapher'

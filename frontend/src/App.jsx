@@ -51,7 +51,7 @@ const App = () => {
   return (
     <AppContextProvider>
       <Warning />
-      {/* <Notify /> */}
+      <Notify />
       <RouterProvider router={router} />
     </AppContextProvider>
   );
