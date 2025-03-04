@@ -91,7 +91,43 @@ const Accordion = (props) => {
     console.log(filteredNodes);
     console.log(wholeGraphData.links);
 
-    setGraphData({ nodes: filteredNodes, links: filteredLinks });
+    setTimeout(() => {
+      setWholeQuerying(false);
+      setGraphData({ nodes: filteredNodes, links: filteredLinks });
+    }, 700);
+  };
+  const GetOneRelation = (L) => {
+    if (!wholeGraphData || !wholeGraphData.nodes || !wholeGraphData.links) {
+      return { nodes: [], links: [] };
+    }
+
+    // 过滤符合 relation 的 links
+    const filteredLinks = wholeGraphData.links.filter(
+      (link) => link.type === L,
+    );
+
+    // 获取符合条件的 source 和 target 节点 ID，确保获取的是 ID 而不是对象
+    const nodeIds = new Set(
+      filteredLinks.flatMap((link) => [
+        typeof link.source === 'object' ? link.source.id : link.source,
+        typeof link.target === 'object' ? link.target.id : link.target,
+      ]),
+    );
+
+    // 过滤出相关的 nodes
+    const filteredNodes = wholeGraphData.nodes.filter((node) =>
+      nodeIds.has(node.id),
+    );
+
+    console.log('Filtered Nodes:', filteredNodes);
+    console.log('Filtered Links:', filteredLinks);
+
+    // 更新 graphData
+
+    setTimeout(() => {
+      setWholeQuerying(false);
+      setGraphData({ nodes: [...filteredNodes], links: [...filteredLinks] });
+    }, 700);
   };
 
   const index = 0;
@@ -325,7 +361,7 @@ const Accordion = (props) => {
           color,
           onClick: async () => {
             setIsQuerying(true);
-            // const data = await GetOneRelation(name);
+            const data = GetOneRelation(name);
             const newNodes = data.nodes;
             // start to process DATA
             data.nodes = processNodes(newNodes, wholeLabelColorMapping);
