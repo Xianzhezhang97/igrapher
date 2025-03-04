@@ -1,3 +1,5 @@
+/** @format */
+
 export const gData = {
   nodes: [
     { id: 'Myriel', group: 1 },
