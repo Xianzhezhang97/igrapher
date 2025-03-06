@@ -18,17 +18,17 @@ function GraphBoard() {
 
   // Test mode: query side bar open all the time -----
 
-  useEffect(() => {
-    const delayOpen = setTimeout(() => {
-      setComponentOpen((prev) => ({
-        ...prev,
-        QuerySideBar: true,
-      }));
-    }, 500);
-    return () => {
-      clearTimeout(delayOpen);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const delayOpen = setTimeout(() => {
+  //     setComponentOpen((prev) => ({
+  //       ...prev,
+  //       QuerySideBar: true,
+  //     }));
+  //   }, 500);
+  //   return () => {
+  //     clearTimeout(delayOpen);
+  //   };
+  // }, []);
 
   // ---------------------------------------------------
 

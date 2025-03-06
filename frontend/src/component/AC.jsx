@@ -67,6 +67,7 @@ const Accordion = (props) => {
   // const DarkenColorSelector = isComponentOpen.GlobalDarkMode ? 'max' : 'min';
 
   const GetALlNodesViaOneLabel = (L) => {
+    setWholeQuerying(true);
     console.log('wholeGraphData');
     console.log(wholeGraphData);
     console.log('wholeGraphData');
@@ -92,11 +93,12 @@ const Accordion = (props) => {
     console.log(wholeGraphData.links);
 
     setTimeout(() => {
-      setWholeQuerying(false);
+      setIsQuerying(false);
       setGraphData({ nodes: filteredNodes, links: filteredLinks });
     }, 700);
   };
   const GetOneRelation = (L) => {
+    setWholeQuerying(true);
     if (!wholeGraphData || !wholeGraphData.nodes || !wholeGraphData.links) {
       return { nodes: [], links: [] };
     }
@@ -125,7 +127,7 @@ const Accordion = (props) => {
     // 更新 graphData
 
     setTimeout(() => {
-      setWholeQuerying(false);
+      setIsQuerying(false);
       setGraphData({ nodes: [...filteredNodes], links: [...filteredLinks] });
     }, 700);
   };
@@ -512,7 +514,7 @@ const Accordion = (props) => {
               >
                 {/* Query Status */}
                 <AnimatePresence key={'WholeQueryingStatus'}>
-                  {WholeQuerying && (
+                  {isQuerying && (
                     <motion.div
                       layout
                       exit={{ scale: 0 }}
@@ -716,12 +718,13 @@ const Accordion = (props) => {
                             </motion.div>
                           </motion.button>
                         )}
-                        {!isQuerying && (
+                        {WholeQuerying && (
                           <motion.div
                             layout
                             initial={{ scale: 0, opacity: 0, y: -20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0, opacity: 0, y: -20 }}
+                            onClick={setWholeQuerying(false)}
                             className='flex items-center justify-center text-[15px]'
                             style={{
                               color: `rgba(${Math[
@@ -813,7 +816,7 @@ const Accordion = (props) => {
                       <motion.div className='relative inline-flex h-auto justify-self-center '>
                         <motion.div
                           style={{
-                            backgroundColor: !WholeQuerying
+                            backgroundColor: !isQuerying
                               ? `rgba(${Math[
                                   isComponentOpen.GlobalDarkMode ? 'max' : 'min'
                                 ](
@@ -837,7 +840,7 @@ const Accordion = (props) => {
                                     ColorDarkenValue,
                                 )}, 0.2)`
                               : 'rgba(128,128,128,0.2)',
-                            borderColor: !WholeQuerying
+                            borderColor: !isQuerying
                               ? `rgba(${Math[
                                   isComponentOpen.GlobalDarkMode ? 'max' : 'min'
                                 ](
@@ -861,7 +864,7 @@ const Accordion = (props) => {
                                     ColorDarkenValue,
                                 )}, 1)`
                               : 'rgba(128,128,128,0.7)',
-                            color: !WholeQuerying
+                            color: !isQuerying
                               ? `rgba(${Math[
                                   isComponentOpen.GlobalDarkMode ? 'max' : 'min'
                                 ](
@@ -894,7 +897,7 @@ const Accordion = (props) => {
                             exit={{ scale: 0 }}
                             className=' z-0 rounded-full w-[10px] h-[10px] m-[3px] mr-[6px] items-center justify-center  transition-all duration-75'
                             style={{
-                              backgroundColor: !WholeQuerying
+                              backgroundColor: !isQuerying
                                 ? `rgba(${Math[
                                     isComponentOpen.GlobalDarkMode
                                       ? 'max'
@@ -946,7 +949,7 @@ const Accordion = (props) => {
                     (relationship, index) => (
                       <motion.button
                         key={index + 'relationship' + relationship.name}
-                        disabled={WholeQuerying ? true : undefined}
+                        disabled={isQuerying ? true : undefined}
                         whileHover={{ scale: isQuerying ? 1 : 1.05 }}
                         whileTap={{ scale: isQuerying ? 1 : 1.02 }}
                         style={{ animationDelay: `${index * 0.2}s` }}
@@ -964,7 +967,7 @@ const Accordion = (props) => {
                         <motion.div className='relative inline-flex h-auto justify-self-center '>
                           <motion.div
                             style={{
-                              backgroundColor: !WholeQuerying
+                              backgroundColor: !isQuerying
                                 ? `rgba(${Math[
                                     isComponentOpen.GlobalDarkMode
                                       ? 'max'
@@ -1006,7 +1009,7 @@ const Accordion = (props) => {
                                     ) - ColorDarkenValue,
                                   )}, 0.2)`
                                 : 'rgba(128,128,128,0.2)',
-                              borderColor: !WholeQuerying
+                              borderColor: !isQuerying
                                 ? `rgba(${Math[
                                     isComponentOpen.GlobalDarkMode
                                       ? 'max'
@@ -1048,7 +1051,7 @@ const Accordion = (props) => {
                                     ) - ColorDarkenValue,
                                   )}, 1)`
                                 : 'rgba(128,128,128,0.7)',
-                              color: !WholeQuerying
+                              color: !isQuerying
                                 ? `rgba(${Math[
                                     isComponentOpen.GlobalDarkMode
                                       ? 'max'
@@ -1099,7 +1102,7 @@ const Accordion = (props) => {
                               exit={{ scale: 0 }}
                               className=' z-0 rounded-full w-[10px] h-[10px] m-[3px] mr-[6px] items-center justify-center  transition-all duration-75'
                               style={{
-                                backgroundColor: !WholeQuerying
+                                backgroundColor: !isQuerying
                                   ? `rgba(${Math[
                                       isComponentOpen.GlobalDarkMode
                                         ? 'max'
