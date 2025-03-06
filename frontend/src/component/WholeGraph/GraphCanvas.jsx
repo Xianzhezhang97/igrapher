@@ -41,7 +41,7 @@ const GraphCanvas = () => {
         id: Math.random().toString(36).substr(2, 9),
         x: (x - rect.width / 2) * 0.01,
         y: (y - rect.height / 2) * 0.01,
-        z: 0,
+        z: (z - rect.height / 2) * 0.01,
         properties: {
           name: label.name,
         },
@@ -129,7 +129,7 @@ const GraphCanvas = () => {
           z: node.z * distRatio,
         }, // new position
         node, // lookAt ({ x, y, z })
-        3000, // ms transition duration
+        4000, // ms transition duration
       );
     },
     // only re-run the effect if the node changes
