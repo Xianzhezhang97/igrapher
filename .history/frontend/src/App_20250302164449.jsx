@@ -11,7 +11,6 @@ import Login from './pages/Login.jsx';
 import GraphGrawing from './component/WholeGraph/GraphDrawing.jsx';
 import { AppContextProvider } from './help/ContextManager';
 import Warning from './pages/warning.jsx';
-import Notify from './component/Notify.jsx';
 // import ProtectedRoute from './component/ProtectRoute.jsx';
 
 export const router = createBrowserRouter([
@@ -51,7 +50,6 @@ const App = () => {
   return (
     <AppContextProvider>
       <Warning />
-      <Notify />
       <RouterProvider router={router} />
     </AppContextProvider>
   );

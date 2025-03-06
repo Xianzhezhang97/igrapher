@@ -50,8 +50,8 @@ export const router = createBrowserRouter([
 const App = () => {
   return (
     <AppContextProvider>
-      <Warning />
-      <Notify />
+      {/* <Warning /> */}
+      {/* <Notify /> */}
       <RouterProvider router={router} />
     </AppContextProvider>
   );
