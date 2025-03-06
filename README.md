@@ -1,4 +1,4 @@
-# 9900 A Fantastic Idea
+# Igrapher guideline
 
 
 ## Prerequisites
